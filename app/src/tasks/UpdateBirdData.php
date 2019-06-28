@@ -15,7 +15,7 @@ use SilverStripe\Core\Config\Config;
  */
 class UpdateBirdData extends BuildTask {
 
-        protected $title = 'Update Birt data';
+        protected $title = 'Update Bird data';
 
         protected $enabled = true;
 
@@ -74,9 +74,9 @@ class UpdateBirdData extends BuildTask {
 				foreach ($spreadsheet_data as $row) {
 
 
-					$recordid = $row[$columns['RECORD']];
+				  $recordid = $row[$columns['RECORD']];
 					
-					$bird = Bird::get()->filter(array("RecordID" => $recordid))->first();
+				  $bird = Bird::get()->filter(array("Record" => $recordid))->first();
 					
 					if (!$bird) {
 
