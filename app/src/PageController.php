@@ -31,6 +31,7 @@ namespace {
             // See: https://docs.silverstripe.org/en/developer_guides/templates/requirements/
             Requirements::javascript("//ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js");
             Requirements::css("//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css");
+            Requirements::css("//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
             Requirements::javascript("//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js");
 
 
