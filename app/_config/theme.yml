@@ -3,7 +3,7 @@ Name: mytheme
 ---
 SilverStripe\View\SSViewer:
   themes:
-    - 'diatheme'
+    - '/dia/themes/diatheme'
     - '$public'
     - 'simple'
     - '$default'

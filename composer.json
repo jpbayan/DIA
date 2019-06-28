@@ -28,10 +28,10 @@
             "web.config"
         ],
         "expose": [
-            "themes/diatheme/css",
-            "themes/diatheme/javascript",
-            "themes/diatheme/images",
-            "themes/diatheme/webfonts"
+            "dia/themes/diatheme/css",
+            "dia/themes/diatheme/javascript",
+            "dia/themes/diatheme/images",
+            "dia/themes/diatheme/webfonts"
         ]
     },
     "config": {
