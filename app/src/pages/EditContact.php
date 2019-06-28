@@ -8,73 +8,102 @@ use SilverStripe\Forms\HeaderField;
 use SilverStripe\Forms\RequiredFields;
 use SilverStripe\Forms\TextField;
 use SilverStripe\Forms\LiteralField;
+use Silverstripe\Forms\HiddenField;
 use SilverStripe\Security\Member;
 use SilverStripe\Security\Security;
 use SilverStripe\Control\Session;
 
 /**
- * Page for collecting a person contact info
+ * Page for editing contact info
  *
  * @author Joy
  */
-class RegistrationPage extends Page {
+class EditContactPage extends Page {
 
-    private static $singular_name = 'Registration page';
-    private static $description = "A page where visitors can register their information";
+    private static $singular_name = 'Edit Contact page';
+    private static $description = "A page where visitors can edit contact information";
 
 }
 
-class RegistrationPageController extends PageController {
+class EditContactPageController extends PageController {
+
+    private $ID;
 
     private static $allowed_actions = [
         "Form",
-		"doRegister",
+		"doEditContact",
         "success"
     ];
 
+
+    public function init() {
+        parent::init();
+
+       $this->ID = $this->request->getVar('ID'); 
+
+
+    }
+
     public function Form() {
+
+        $member = null;
+
+        if ($this->ID) {
+           $member = Member::get()->byID($this->ID);
+        }
+
+        if (!$member) {
+          $fields = FieldList::create();
+          $fields->add(HeaderField::create("PersonalHeader", "No Record Found"));
+            $actions = FieldList::create();
+            $form = Form::create($this, 'Form', $fields, $actions);
+            return $form;
+    
+        }
+
+
         $fields = FieldList::create();
         $fields->add(HeaderField::create("PersonalHeader", "Personal details"));
+        $fields->add(LiteralField::create("EmailDisplay", " Email : ".$member->Email));
         $fields->add(TextField::create("FirstName", "")->setAttribute("placeholder", "Name"));
         $fields->add(TextField::create("Surname", "")->setAttribute("placeholder", "Surname"));
         $fields->add(TextField::create("Phone", "")->setAttribute("placeholder", "Tel"));
         $fields->add(TextField::create("Mobile", "")->setAttribute("placeholder", "Mob"));
-        $fields->add(EmailField::create("Email", "")->setAttribute("placeholder", "Email"));
         $fields->add(TextField::create("FacebookLink", "")->setAttribute("placeholder", "Facebook"));
         $fields->add(TextField::create("TwitterLink", "")->setAttribute("placeholder", "Twitter"));
         $fields->add(TextField::create("LinkedinLink", "")->setAttribute("placeholder", "Linkedin"));
+        $fields->add(HiddenField::create("PID", "", $member->ID));
 
         $actions = FieldList::create();
-        $actions->add(FormAction::create('doRegister', 'Register'));
+        $actions->add(FormAction::create('doEditContact', 'Save'));
 
         $required = RequiredFields::create([
                     'FirstName',
                     'Surname',
-                    'Email',
                     'Mobile'
 
         ]);
          $form = Form::create($this, 'Form', $fields, $actions, $required);
 
         $form->getSessionData();
+        $form->loadDataFrom($member);
 
         return $form;
     }
 
-   public function doRegister($data, $form, $request) {
+   public function doEditContact($data, $form, $request) {
 
-        $existingMember = Member::get()->filter(["Email" => $data['Email']])->first();
-        if ($existingMember) {
-            $form->sessionMessage("This user is already registered", "bad");
+        $existingMember =  Member::get()->byID($data['PID']); 
+        if (!$existingMember) {
+            $form->sessionMessage("This user doesnot exist", "bad");
             $form->setSessionData($data);
             return $this->redirectBack();
         }
 
-        $businessMember = Member::create();
-        $businessMember->update($data);
-        $businessMember->write();
-		
-		 return $this->redirect($this->Link() . 'success/');
+        $existingMember->update($data);
+        $existingMember->write();
+
+	return $this->redirect($this->Link() . 'success/');
 
 
 
@@ -82,7 +111,7 @@ class RegistrationPageController extends PageController {
 	
     public function success($data) {
 
-        $messg = "Registration success!";
+        $messg = "Contact Info updated!";
 
         $arrayData = new SilverStripe\View\ArrayData([
             'Content' => $messg
@@ -92,6 +121,7 @@ class RegistrationPageController extends PageController {
 
     }
 	
+
 
 
 

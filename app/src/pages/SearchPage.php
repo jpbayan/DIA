@@ -73,7 +73,7 @@ class SearchPageController extends PageController {
           return null;
        }
 
-	$MemberList = Member::get()->where("Email like '%". $this->cKey ."%'");
+	$MemberList = Member::get()->where("Email like '%". $this->cKey ."%' or FirstName like '%". $this->cKey  ."%' or Surname like '%". $this->cKey  ."%'");
         
         return $MemberList;	
     }
