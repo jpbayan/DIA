@@ -10,3 +10,8 @@ SilverStripe\Control\Director:
 SilverStripe\Security\Member:
   extensions:
     - RegisterMemberExtension
+
+SilverStripe\SiteConfig\SiteConfig:
+  extensions:
+    - SiteConfigExtension
+
