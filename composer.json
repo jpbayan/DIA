@@ -26,6 +26,12 @@
             "install-frameworkmissing.html",
             "install.php",
             "web.config"
+        ],
+        "expose": [
+            "themes/diatheme/css",
+            "themes/diatheme/javascript",
+            "themes/diatheme/images",
+            "themes/diatheme/webfonts"
         ]
     },
     "config": {

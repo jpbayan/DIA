@@ -7,3 +7,6 @@ SilverStripe\Core\Manifest\ModuleManifest:
 SilverStripe\Control\Director:
   alternate_base_url: https://joydrone.littlemonkey.info
 
+SilverStripe\Security\Member:
+  extensions:
+    - RegisterMemberExtension
