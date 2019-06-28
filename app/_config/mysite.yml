@@ -1,0 +1,9 @@
+---
+Name: myproject
+---
+SilverStripe\Core\Manifest\ModuleManifest:
+  project: app
+
+SilverStripe\Control\Director:
+  alternate_base_url: https://joydrone.littlemonkey.info
+
